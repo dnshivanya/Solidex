@@ -468,13 +468,13 @@ export default function CustomerInspectionPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Customer Inspections</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Customer Inspections</h2>
               <div className="flex gap-2">
                 {inspections.length > 0 && (
                   <button
@@ -494,13 +494,13 @@ export default function CustomerInspectionPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow mb-6 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-6 p-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
                 <select
                   value={filter.status}
                   onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                 >
                   <option value="">All Status</option>
                   <option value="Scheduled">Scheduled</option>
@@ -514,43 +514,43 @@ export default function CustomerInspectionPage() {
             </div>
 
             {loading ? (
-              <div className="text-center py-12">Loading...</div>
+              <div className="text-center py-12 text-gray-900 dark:text-white">Loading...</div>
             ) : (
-              <div className="bg-white rounded-lg shadow overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Inspection #</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Scheduled Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Inspection #</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Customer</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Order</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Scheduled Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Type</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     {inspections.map((inspection) => (
                       <React.Fragment key={inspection._id}>
                         <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{inspection.inspectionNumber}</td>
-                        <td className="px-6 py-4 text-sm text-gray-500">{inspection.customerName}</td>
-                        <td className="px-6 py-4 text-sm text-gray-500">{inspection.order?.orderNumber || 'N/A'}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{inspection.inspectionNumber}</td>
+                        <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300">{inspection.customerName}</td>
+                        <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300">{inspection.order?.orderNumber || 'N/A'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                           {new Date(inspection.scheduledDate).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800">
+                          <span className="px-2 py-1 text-xs rounded bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                             {inspection.inspectionType}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 py-1 text-xs rounded ${
-                            inspection.overallStatus === 'Passed' ? 'bg-green-100 text-green-800' :
-                            inspection.overallStatus === 'Failed' ? 'bg-red-100 text-red-800' :
-                            inspection.overallStatus === 'Conditional Approval' ? 'bg-yellow-100 text-yellow-800' :
-                            inspection.overallStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                            'bg-gray-100 text-gray-800'
+                            inspection.overallStatus === 'Passed' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                            inspection.overallStatus === 'Failed' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                            inspection.overallStatus === 'Conditional Approval' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' :
+                            inspection.overallStatus === 'In Progress' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300' :
+                            'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                           }`}>
                             {inspection.overallStatus}
                           </span>
@@ -558,21 +558,21 @@ export default function CustomerInspectionPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm space-x-2">
                           <button
                             onClick={() => handleViewDetails(inspection._id)}
-                            className="text-brand-blue hover:underline"
+                            className="text-brand-blue dark:text-blue-400 hover:underline"
                           >
                             {expandedInspection === inspection._id ? 'Hide' : 'View'}
                           </button>
-                          <Link href={`/admin/customer-inspection/${inspection._id}/edit`} className="text-brand-yellow hover:underline">Edit</Link>
+                          <Link href={`/admin/customer-inspection/${inspection._id}/edit`} className="text-brand-yellow dark:text-yellow-400 hover:underline">Edit</Link>
                           <button
                             onClick={() => handleDownloadIndividual(inspection)}
-                            className="text-brand-green hover:underline"
+                            className="text-brand-green dark:text-green-400 hover:underline"
                             title="Download PDF"
                           >
                             📥 PDF
                           </button>
                           <button
                             onClick={() => handleDelete(inspection._id)}
-                            className="text-red-600 hover:underline"
+                            className="text-red-600 dark:text-red-400 hover:underline"
                           >
                             Delete
                           </button>
@@ -580,35 +580,35 @@ export default function CustomerInspectionPage() {
                       </tr>
                       {expandedInspection === inspection._id && inspectionDetails && (
                         <tr>
-                          <td colSpan={7} className="px-6 py-4 bg-gray-50">
+                          <td colSpan={7} className="px-6 py-4 bg-gray-50 dark:bg-gray-700">
                             <div className="space-y-4">
                               {/* Inspection Items Table */}
                               {inspectionDetails.items && inspectionDetails.items.length > 0 && (
                                 <div>
-                                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Inspection Items</h3>
+                                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Inspection Items</h3>
                                   <div className="overflow-x-auto">
-                                    <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
-                                      <thead className="bg-gray-100">
+                                    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 border border-gray-300 dark:border-gray-600">
+                                      <thead className="bg-gray-100 dark:bg-gray-600">
                                         <tr>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">SL. No.</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Product</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Quantity</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Inspected</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Passed</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Rejected</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Remarks</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">SL. No.</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Product</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Quantity</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Inspected</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Passed</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Rejected</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Remarks</th>
                                         </tr>
                                       </thead>
-                                      <tbody className="bg-white divide-y divide-gray-200">
+                                      <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                         {inspectionDetails.items.map((item: any, index: number) => (
                                           <tr key={index}>
-                                            <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{index + 1}</td>
-                                            <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{item.product?.name || 'N/A'}</td>
-                                            <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{item.quantity || '-'}</td>
-                                            <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{item.inspectedQuantity || '-'}</td>
-                                            <td className="px-4 py-2 text-sm text-green-600 font-semibold border border-gray-300">{item.passedQuantity || '-'}</td>
-                                            <td className="px-4 py-2 text-sm text-red-600 font-semibold border border-gray-300">{item.rejectedQuantity || '-'}</td>
-                                            <td className="px-4 py-2 text-sm text-gray-500 border border-gray-300">{item.remarks || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{index + 1}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{item.product?.name || 'N/A'}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{item.quantity || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{item.inspectedQuantity || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-green-600 dark:text-green-400 font-semibold border border-gray-300 dark:border-gray-600">{item.passedQuantity || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-red-600 dark:text-red-400 font-semibold border border-gray-300 dark:border-gray-600">{item.rejectedQuantity || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 border border-gray-300 dark:border-gray-600">{item.remarks || '-'}</td>
                                           </tr>
                                         ))}
                                       </tbody>
@@ -620,22 +620,22 @@ export default function CustomerInspectionPage() {
                               {/* Customer Team */}
                               {inspectionDetails.customerTeam && inspectionDetails.customerTeam.length > 0 && (
                                 <div>
-                                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Customer Team</h3>
+                                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Customer Team</h3>
                                   <div className="overflow-x-auto">
-                                    <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
-                                      <thead className="bg-gray-100">
+                                    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 border border-gray-300 dark:border-gray-600">
+                                      <thead className="bg-gray-100 dark:bg-gray-600">
                                         <tr>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Name</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Designation</th>
-                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Contact</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Name</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Designation</th>
+                                          <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Contact</th>
                                         </tr>
                                       </thead>
-                                      <tbody className="bg-white divide-y divide-gray-200">
+                                      <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                         {inspectionDetails.customerTeam.map((member: any, index: number) => (
                                           <tr key={index}>
-                                            <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{member.name || '-'}</td>
-                                            <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{member.designation || '-'}</td>
-                                            <td className="px-4 py-2 text-sm text-gray-500 border border-gray-300">{member.contact || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{member.name || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{member.designation || '-'}</td>
+                                            <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 border border-gray-300 dark:border-gray-600">{member.contact || '-'}</td>
                                           </tr>
                                         ))}
                                       </tbody>
@@ -648,14 +648,14 @@ export default function CustomerInspectionPage() {
                               <div className="grid grid-cols-2 gap-4 mt-4">
                                 {inspectionDetails.customerRemarks && (
                                   <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Customer Remarks</label>
-                                    <p className="text-sm text-gray-600">{inspectionDetails.customerRemarks}</p>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Customer Remarks</label>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">{inspectionDetails.customerRemarks}</p>
                                   </div>
                                 )}
                                 {inspectionDetails.internalRemarks && (
                                   <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Internal Remarks</label>
-                                    <p className="text-sm text-gray-600">{inspectionDetails.internalRemarks}</p>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Internal Remarks</label>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">{inspectionDetails.internalRemarks}</p>
                                   </div>
                                 )}
                               </div>
@@ -668,7 +668,7 @@ export default function CustomerInspectionPage() {
                   </tbody>
                 </table>
                 {inspections.length === 0 && (
-                  <div className="text-center py-12 text-gray-500">No inspections found</div>
+                  <div className="text-center py-12 text-gray-500 dark:text-gray-400">No inspections found</div>
                 )}
               </div>
             )}

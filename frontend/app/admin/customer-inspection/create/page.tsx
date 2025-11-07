@@ -19,7 +19,26 @@ interface Order {
 export default function CreateCustomerInspectionPage() {
   const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    order: string;
+    customerName: string;
+    scheduledDate: string;
+    actualDate: string;
+    inspectionType: string;
+    customerTeam: Array<{ name: string; designation: string; contact: string }>;
+    items: Array<{
+      order: string;
+      product: any;
+      quantity: any;
+      inspectedQuantity: number;
+      passedQuantity: number;
+      rejectedQuantity: number;
+      remarks: string;
+    }>;
+    overallStatus: string;
+    customerRemarks: string;
+    internalRemarks: string;
+  }>({
     order: '',
     customerName: '',
     scheduledDate: new Date().toISOString().split('T')[0],
@@ -115,16 +134,16 @@ export default function CreateCustomerInspectionPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Schedule Customer Inspection</h2>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Schedule Customer Inspection</h2>
 
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Order *</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Order *</label>
                 <select
                   value={formData.order}
                   onChange={(e) => handleOrderSelect(e.target.value)}
@@ -142,21 +161,21 @@ export default function CreateCustomerInspectionPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Customer Name *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Customer Name *</label>
                   <input
                     type="text"
                     value={formData.customerName}
                     onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Inspection Type *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Inspection Type *</label>
                   <select
                     value={formData.inspectionType}
                     onChange={(e) => setFormData({ ...formData, inspectionType: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   >
                     <option value="Pre-Production">Pre-Production</option>
@@ -169,68 +188,68 @@ export default function CreateCustomerInspectionPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Scheduled Date *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Scheduled Date *</label>
                   <input
                     type="date"
                     value={formData.scheduledDate}
                     onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Actual Date</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Actual Date</label>
                   <input
                     type="date"
                     value={formData.actualDate}
                     onChange={(e) => setFormData({ ...formData, actualDate: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   />
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <label className="block text-sm font-medium text-gray-700">Customer Team *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Customer Team *</label>
                   <button
                     type="button"
                     onClick={addTeamMember}
-                    className="text-brand-blue hover:underline"
+                    className="text-brand-blue dark:text-blue-400 hover:underline"
                   >
                     + Add Member
                   </button>
                 </div>
                 <div className="space-y-4">
                   {formData.customerTeam.map((member, index) => (
-                    <div key={index} className="border border-gray-200 rounded p-4">
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-4">
                       <div className="grid grid-cols-3 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name *</label>
                           <input
                             type="text"
                             value={member.name}
                             onChange={(e) => handleTeamChange(index, 'name', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                             required
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Designation</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Designation</label>
                           <input
                             type="text"
                             value={member.designation}
                             onChange={(e) => handleTeamChange(index, 'designation', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Contact</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Contact</label>
                           <div className="flex">
                             <input
                               type="text"
                               value={member.contact}
                               onChange={(e) => handleTeamChange(index, 'contact', e.target.value)}
-                              className="w-full border border-gray-300 rounded px-3 py-2"
+                              className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                             />
                             {formData.customerTeam.length > 1 && (
                               <button
@@ -251,57 +270,57 @@ export default function CreateCustomerInspectionPage() {
 
               {formData.items.length > 0 && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-4">Items to Inspect</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Items to Inspect</label>
                   <div className="space-y-4">
                     {formData.items.map((item: any, index: number) => (
-                      <div key={index} className="border border-gray-200 rounded p-4">
+                      <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-4">
                         <div className="grid grid-cols-4 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Product</label>
-                            <p className="text-gray-900">{item.product?.name || 'N/A'}</p>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product</label>
+                            <p className="text-gray-900 dark:text-white">{item.product?.name || 'N/A'}</p>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
-                            <p className="text-gray-900">{item.quantity}</p>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quantity</label>
+                            <p className="text-gray-900 dark:text-white">{item.quantity}</p>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Inspected Qty</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Inspected Qty</label>
                             <input
                               type="number"
                               value={item.inspectedQuantity}
                               onChange={(e) => handleItemChange(index, 'inspectedQuantity', parseInt(e.target.value))}
-                              className="w-full border border-gray-300 rounded px-3 py-2"
+                              className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                               min="0"
                               max={item.quantity}
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Passed Qty</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Passed Qty</label>
                             <input
                               type="number"
                               value={item.passedQuantity}
                               onChange={(e) => handleItemChange(index, 'passedQuantity', parseInt(e.target.value))}
-                              className="w-full border border-gray-300 rounded px-3 py-2"
+                              className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                               min="0"
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Rejected Qty</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Rejected Qty</label>
                             <input
                               type="number"
                               value={item.rejectedQuantity}
                               onChange={(e) => handleItemChange(index, 'rejectedQuantity', parseInt(e.target.value))}
-                              className="w-full border border-gray-300 rounded px-3 py-2"
+                              className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                               min="0"
                             />
                           </div>
                           <div className="col-span-3">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Remarks</label>
                             <input
                               type="text"
                               value={item.remarks}
                               onChange={(e) => handleItemChange(index, 'remarks', e.target.value)}
-                              className="w-full border border-gray-300 rounded px-3 py-2"
+                              className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                             />
                           </div>
                         </div>
@@ -312,21 +331,21 @@ export default function CreateCustomerInspectionPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Customer Remarks</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Customer Remarks</label>
                 <textarea
                   value={formData.customerRemarks}
                   onChange={(e) => setFormData({ ...formData, customerRemarks: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   rows={3}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Internal Remarks</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Internal Remarks</label>
                 <textarea
                   value={formData.internalRemarks}
                   onChange={(e) => setFormData({ ...formData, internalRemarks: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   rows={3}
                 />
               </div>
@@ -334,7 +353,7 @@ export default function CreateCustomerInspectionPage() {
               <div className="flex justify-end space-x-4">
                 <Link
                   href="/admin/customer-inspection"
-                  className="px-6 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
+                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   Cancel
                 </Link>

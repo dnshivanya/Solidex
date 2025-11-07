@@ -3,11 +3,21 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { useRouter, usePathname } from 'next/navigation';
 import Button from './ui/Button';
 
 export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
   const { user, logout } = useAuth();
+  let theme: 'light' | 'dark' = 'light';
+  let toggleTheme = () => {};
+  try {
+    const themeContext = useTheme();
+    theme = themeContext.theme;
+    toggleTheme = themeContext.toggleTheme;
+  } catch (e) {
+    // Theme context not available
+  }
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -71,6 +81,7 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
     { href: '/admin/invoice', label: 'Invoice', icon: '🧾' },
     { href: '/admin/stock', label: 'Stock', icon: '📦' },
     { href: '/admin/products', label: 'Products', icon: '🛠️' },
+    { href: '/gallery', label: 'Gallery', icon: '🖼️' },
   ];
 
   const getPageTitle = () => {
@@ -83,12 +94,12 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
     return (
       <>
         {/* Sidebar */}
-        <aside className={`fixed inset-y-0 left-0 z-50 bg-white border-r border-gray-200 transform transition-all duration-300 ease-in-out lg:translate-x-0 ${
+        <aside className={`fixed inset-y-0 left-0 z-50 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform transition-all duration-300 ease-in-out lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } ${sidebarCollapsed ? 'w-16' : 'w-64'}`} style={{ top: 0 }}>
           <div className="h-full overflow-y-auto scrollbar-hide flex flex-col">
             {/* Sidebar Header with SOLIDEX at top */}
-            <div className={`h-16 border-b border-gray-200 flex items-center ${sidebarCollapsed ? 'justify-center px-2' : 'justify-between px-4'}`}>
+            <div className={`h-16 border-b border-gray-200 dark:border-gray-700 flex items-center ${sidebarCollapsed ? 'justify-center px-2' : 'justify-between px-4'}`}>
               {!sidebarCollapsed && (
                 <Link href="/" className="flex items-center space-x-2 group">
                   <div className="text-xl font-bold bg-gradient-to-r from-brand-blue to-brand-green bg-clip-text text-transparent">
@@ -98,7 +109,7 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
               )}
               <button
                 onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                className={`p-1.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-brand-blue transition-colors ${sidebarCollapsed ? '' : 'ml-auto'}`}
+                className={`p-1.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-brand-blue transition-colors ${sidebarCollapsed ? '' : 'ml-auto'}`}
                 aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,7 +134,7 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
                     className={`flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-4 py-3 rounded-lg font-medium transition-all duration-200 group relative ${
                       active
                         ? 'bg-gradient-to-r from-brand-blue to-brand-green text-white shadow-md'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-brand-blue'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-brand-blue'
                     }`}
                     title={sidebarCollapsed ? link.label : ''}
                   >
@@ -149,7 +160,7 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
         </aside>
 
         {/* Top Bar for Admin */}
-        <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div className="sticky top-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
           <div className={`flex items-center h-16 px-4 transition-all duration-300 ${
             sidebarCollapsed ? 'lg:pl-20 justify-between' : 'lg:pl-72 justify-between'
           }`}>
@@ -165,14 +176,14 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
                   <span className="text-gray-300">|</span>
                 </>
               )}
-              <h1 className="text-xl font-bold text-gray-900">
+              <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                 {getPageTitle()}
               </h1>
             </div>
             
             {/* Mobile Page Title */}
             <div className="lg:hidden flex items-center">
-              <h1 className="text-lg font-bold text-gray-900">
+              <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">
                 {getPageTitle()}
               </h1>
             </div>
@@ -180,7 +191,7 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
             <div className="flex items-center space-x-4 lg:hidden">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 aria-label="Toggle sidebar"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,22 +200,40 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
               </button>
             </div>
             
-            {user && (
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-brand-blue to-brand-green flex items-center justify-center text-white font-semibold text-xs">
-                    {user.name.charAt(0).toUpperCase()}
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                aria-label="Toggle theme"
+                title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+              >
+                {theme === 'light' ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                )}
+              </button>
+              {user && (
+                <>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-brand-blue to-brand-green flex items-center justify-center text-white font-semibold text-xs">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="hidden sm:block text-sm text-gray-700 dark:text-gray-300 font-medium">{user.name}</span>
                   </div>
-                  <span className="hidden sm:block text-sm text-gray-700 font-medium">{user.name}</span>
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="px-3 py-1.5 text-sm text-red-600 hover:text-white hover:bg-red-600 font-medium rounded-lg transition-all duration-200 border border-red-200 hover:border-red-600"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+                  <button
+                    onClick={handleLogout}
+                    className="px-3 py-1.5 text-sm text-red-600 hover:text-white hover:bg-red-600 font-medium rounded-lg transition-all duration-200 border border-red-200 hover:border-red-600"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
@@ -221,7 +250,7 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
 
   // Public Horizontal Scrollable Navbar
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-100 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link href="/" className="flex items-center space-x-3 group flex-shrink-0">
@@ -246,8 +275,8 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
                     href={link.href}
                     className={`relative px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 whitespace-nowrap ${
                       active
-                        ? 'text-brand-blue bg-blue-50'
-                        : 'text-gray-700 hover:text-brand-blue hover:bg-gray-50'
+                        ? 'text-brand-blue bg-blue-50 dark:bg-blue-900/30'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-brand-blue hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
                     {link.label}
@@ -261,6 +290,22 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
           </div>
 
           <div className="flex items-center space-x-3 flex-shrink-0">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Toggle theme"
+              title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+            >
+              {theme === 'light' ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              )}
+            </button>
             {user ? (
               <Link href="/admin">
                 <Button size="sm" className="shadow-md hover:shadow-lg hover:scale-105 transition-all">
@@ -278,7 +323,7 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+              className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               aria-label="Toggle menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -305,10 +350,10 @@ export default function Navbar({ isPublic = false }: { isPublic?: boolean }) {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-4 py-3 text-gray-700 rounded-lg font-medium transition-all duration-200 ${
+                    className={`px-4 py-3 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all duration-200 ${
                       active
-                        ? 'text-brand-blue bg-blue-50 border-l-4 border-brand-blue'
-                        : 'hover:text-brand-blue hover:bg-gray-50'
+                        ? 'text-brand-blue bg-blue-50 dark:bg-blue-900/30 border-l-4 border-brand-blue'
+                        : 'hover:text-brand-blue hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
                     {link.label}

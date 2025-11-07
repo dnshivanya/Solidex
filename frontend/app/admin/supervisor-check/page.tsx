@@ -447,13 +447,13 @@ export default function SupervisorCheckPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Supervisor Checks</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Supervisor Checks</h2>
               <div className="flex gap-2">
                 {checks.length > 0 && (
                   <button
@@ -473,14 +473,14 @@ export default function SupervisorCheckPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow mb-6 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow mb-6 p-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
                   <select
                     value={filter.status}
                     onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   >
                     <option value="">All Status</option>
                     <option value="Pending">Pending</option>
@@ -491,11 +491,11 @@ export default function SupervisorCheckPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Check Type</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Check Type</label>
                   <select
                     value={filter.checkType}
                     onChange={(e) => setFilter({ ...filter, checkType: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   >
                     <option value="">All Types</option>
                     <option value="Pre-Production">Pre-Production</option>
@@ -508,45 +508,45 @@ export default function SupervisorCheckPage() {
             </div>
 
             {loading ? (
-              <div className="text-center py-12">Loading...</div>
+              <div className="text-center py-12 text-gray-900 dark:text-white">Loading...</div>
             ) : (
-              <div className="bg-white rounded-lg shadow overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Check #</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Supervisor</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Check Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Check #</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Product</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Order</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Supervisor</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Check Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Type</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     {checks.map((check) => (
                       <React.Fragment key={check._id}>
                         <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{check.checkNumber}</td>
-                          <td className="px-6 py-4 text-sm text-gray-500">{check.product?.name || 'N/A'}</td>
-                          <td className="px-6 py-4 text-sm text-gray-500">{check.order?.orderNumber || '-'}</td>
-                          <td className="px-6 py-4 text-sm text-gray-500">{check.supervisor}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{check.checkNumber}</td>
+                          <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300">{check.product?.name || 'N/A'}</td>
+                          <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300">{check.order?.orderNumber || '-'}</td>
+                          <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-300">{check.supervisor}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                             {new Date(check.checkDate).toLocaleDateString()}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800">
+                            <span className="px-2 py-1 text-xs rounded bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                               {check.checkType}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`px-2 py-1 text-xs rounded ${
-                              check.overallStatus === 'Passed' ? 'bg-green-100 text-green-800' :
-                              check.overallStatus === 'Failed' ? 'bg-red-100 text-red-800' :
-                              check.overallStatus === 'Conditional Pass' ? 'bg-yellow-100 text-yellow-800' :
-                              check.overallStatus === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                              'bg-gray-100 text-gray-800'
+                              check.overallStatus === 'Passed' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                              check.overallStatus === 'Failed' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                              check.overallStatus === 'Conditional Pass' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' :
+                              check.overallStatus === 'In Progress' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300' :
+                              'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                             }`}>
                               {check.overallStatus}
                             </span>
@@ -554,21 +554,21 @@ export default function SupervisorCheckPage() {
                           <td className="px-6 py-4 whitespace-nowrap text-sm space-x-2">
                             <button
                               onClick={() => handleViewDetails(check._id)}
-                              className="text-brand-blue hover:underline"
+                              className="text-brand-blue dark:text-blue-400 hover:underline"
                             >
                               {expandedCheck === check._id ? 'Hide' : 'View'}
                             </button>
-                            <Link href={`/admin/supervisor-check/${check._id}/edit`} className="text-brand-yellow hover:underline">Edit</Link>
+                            <Link href={`/admin/supervisor-check/${check._id}/edit`} className="text-brand-yellow dark:text-yellow-400 hover:underline">Edit</Link>
                             <button
                               onClick={() => handleDownloadIndividual(check)}
-                              className="text-brand-green hover:underline"
+                              className="text-brand-green dark:text-green-400 hover:underline"
                               title="Download PDF"
                             >
                               📥 PDF
                             </button>
                             <button
                               onClick={() => handleDelete(check._id)}
-                              className="text-red-600 hover:underline"
+                              className="text-red-600 dark:text-red-400 hover:underline"
                             >
                               Delete
                             </button>
@@ -576,41 +576,41 @@ export default function SupervisorCheckPage() {
                         </tr>
                         {expandedCheck === check._id && checkDetails && (
                           <tr>
-                            <td colSpan={8} className="px-6 py-4 bg-gray-50">
+                            <td colSpan={8} className="px-6 py-4 bg-gray-50 dark:bg-gray-700">
                               <div className="space-y-4">
                                 {/* Dimension Checks Table */}
                                 {checkDetails.dimensions && checkDetails.dimensions.length > 0 && (
                                   <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Dimension Checks</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Dimension Checks</h3>
                                     <div className="overflow-x-auto">
-                                      <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
-                                        <thead className="bg-gray-100">
+                                      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600 border border-gray-300 dark:border-gray-600">
+                                        <thead className="bg-gray-100 dark:bg-gray-600">
                                           <tr>
-                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Parameter</th>
-                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Specification</th>
-                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Actual Value</th>
-                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Tolerance</th>
-                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Status</th>
-                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase border border-gray-300">Remarks</th>
+                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Parameter</th>
+                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Specification</th>
+                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Actual Value</th>
+                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Tolerance</th>
+                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Status</th>
+                                            <th className="px-4 py-2 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border border-gray-300 dark:border-gray-600">Remarks</th>
                                           </tr>
                                         </thead>
-                                        <tbody className="bg-white divide-y divide-gray-200">
+                                        <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                           {checkDetails.dimensions.map((dim: any, index: number) => (
                                             <tr key={index}>
-                                              <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{dim.parameter || '-'}</td>
-                                              <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{dim.specification || '-'}</td>
-                                              <td className="px-4 py-2 text-sm text-gray-900 border border-gray-300">{dim.actualValue || '-'}</td>
-                                              <td className="px-4 py-2 text-sm text-gray-500 border border-gray-300">{dim.tolerance || '-'}</td>
-                                              <td className="px-4 py-2 whitespace-nowrap border border-gray-300">
+                                              <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{dim.parameter || '-'}</td>
+                                              <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{dim.specification || '-'}</td>
+                                              <td className="px-4 py-2 text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">{dim.actualValue || '-'}</td>
+                                              <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 border border-gray-300 dark:border-gray-600">{dim.tolerance || '-'}</td>
+                                              <td className="px-4 py-2 whitespace-nowrap border border-gray-300 dark:border-gray-600">
                                                 <span className={`px-2 py-1 text-xs rounded ${
-                                                  dim.status === 'Pass' ? 'bg-green-100 text-green-800' :
-                                                  dim.status === 'Fail' ? 'bg-red-100 text-red-800' :
-                                                  'bg-gray-100 text-gray-800'
+                                                  dim.status === 'Pass' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                                                  dim.status === 'Fail' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                                                  'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                                                 }`}>
                                                   {dim.status || 'Pending'}
                                                 </span>
                                               </td>
-                                              <td className="px-4 py-2 text-sm text-gray-500 border border-gray-300">{dim.remarks || '-'}</td>
+                                              <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 border border-gray-300 dark:border-gray-600">{dim.remarks || '-'}</td>
                                             </tr>
                                           ))}
                                         </tbody>
@@ -622,29 +622,29 @@ export default function SupervisorCheckPage() {
                                 {/* Visual Inspection and Material Check */}
                                 <div className="grid grid-cols-2 gap-4 mt-4">
                                   <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Visual Inspection</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Visual Inspection</label>
                                     <span className={`inline-block px-3 py-1 text-sm rounded ${
-                                      checkDetails.visualInspection?.status === 'Pass' ? 'bg-green-100 text-green-800' :
-                                      checkDetails.visualInspection?.status === 'Fail' ? 'bg-red-100 text-red-800' :
-                                      'bg-gray-100 text-gray-800'
+                                      checkDetails.visualInspection?.status === 'Pass' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                                      checkDetails.visualInspection?.status === 'Fail' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                                      'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                                     }`}>
                                       {checkDetails.visualInspection?.status || 'Pending'}
                                     </span>
                                     {checkDetails.visualInspection?.remarks && (
-                                      <p className="text-sm text-gray-600 mt-2">{checkDetails.visualInspection.remarks}</p>
+                                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{checkDetails.visualInspection.remarks}</p>
                                     )}
                                   </div>
                                   <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Material Check</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Material Check</label>
                                     <span className={`inline-block px-3 py-1 text-sm rounded ${
-                                      checkDetails.materialCheck?.status === 'Pass' ? 'bg-green-100 text-green-800' :
-                                      checkDetails.materialCheck?.status === 'Fail' ? 'bg-red-100 text-red-800' :
-                                      'bg-gray-100 text-gray-800'
+                                      checkDetails.materialCheck?.status === 'Pass' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                                      checkDetails.materialCheck?.status === 'Fail' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                                      'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                                     }`}>
                                       {checkDetails.materialCheck?.status || 'Pending'}
                                     </span>
                                     {checkDetails.materialCheck?.remarks && (
-                                      <p className="text-sm text-gray-600 mt-2">{checkDetails.materialCheck.remarks}</p>
+                                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{checkDetails.materialCheck.remarks}</p>
                                     )}
                                   </div>
                                 </div>
@@ -657,7 +657,7 @@ export default function SupervisorCheckPage() {
                   </tbody>
                 </table>
                 {checks.length === 0 && (
-                  <div className="text-center py-12 text-gray-500">No supervisor checks found</div>
+                  <div className="text-center py-12 text-gray-500 dark:text-gray-400">No supervisor checks found</div>
                 )}
               </div>
             )}

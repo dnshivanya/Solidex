@@ -161,8 +161,8 @@ export default function EditSupervisorCheckPage() {
   if (fetching) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">Loading...</div>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="text-center text-gray-900 dark:text-white">Loading...</div>
         </div>
       </ProtectedRoute>
     );
@@ -170,21 +170,21 @@ export default function EditSupervisorCheckPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Edit Supervisor Check</h2>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Edit Supervisor Check</h2>
 
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Product *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product *</label>
                   <select
                     value={formData.product}
                     onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   >
                     <option value="">Select Product</option>
@@ -196,11 +196,11 @@ export default function EditSupervisorCheckPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Order (Optional)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Order (Optional)</label>
                   <select
                     value={formData.order}
                     onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   >
                     <option value="">Select Order</option>
                     {orders.map((order) => (
@@ -214,11 +214,11 @@ export default function EditSupervisorCheckPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Drawing (Optional)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Drawing (Optional)</label>
                   <select
                     value={formData.drawing}
                     onChange={(e) => setFormData({ ...formData, drawing: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   >
                     <option value="">Select Drawing</option>
                     {drawings.map((drawing) => (
@@ -229,43 +229,43 @@ export default function EditSupervisorCheckPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Batch Number</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Batch Number</label>
                   <input
                     type="text"
                     value={formData.batchNumber}
                     onChange={(e) => setFormData({ ...formData, batchNumber: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Supervisor *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Supervisor *</label>
                   <input
                     type="text"
                     value={formData.supervisor}
                     onChange={(e) => setFormData({ ...formData, supervisor: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Check Date *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Check Date *</label>
                   <input
                     type="date"
                     value={formData.checkDate}
                     onChange={(e) => setFormData({ ...formData, checkDate: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Check Type *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Check Type *</label>
                   <select
                     value={formData.checkType}
                     onChange={(e) => setFormData({ ...formData, checkType: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   >
                     <option value="Pre-Production">Pre-Production</option>
@@ -278,65 +278,65 @@ export default function EditSupervisorCheckPage() {
 
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <label className="block text-sm font-medium text-gray-700">Dimension Checks</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Dimension Checks</label>
                   <button
                     type="button"
                     onClick={addDimension}
-                    className="text-brand-blue hover:underline"
+                    className="text-brand-blue dark:text-blue-400 hover:underline"
                   >
                     + Add Dimension
                   </button>
                 </div>
                 <div className="space-y-4">
                   {formData.dimensions.map((dim, index) => (
-                    <div key={index} className="border border-gray-200 rounded p-4">
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-4">
                       <div className="grid grid-cols-6 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Parameter</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Parameter</label>
                           <input
                             type="text"
                             value={dim.parameter}
                             onChange={(e) => handleDimensionChange(index, 'parameter', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                             placeholder="e.g., OD, ID, Length"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Specification</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Specification</label>
                           <input
                             type="text"
                             value={dim.specification}
                             onChange={(e) => handleDimensionChange(index, 'specification', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                             placeholder="Required value"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Actual Value</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Actual Value</label>
                           <input
                             type="number"
                             value={dim.actualValue}
                             onChange={(e) => handleDimensionChange(index, 'actualValue', parseFloat(e.target.value))}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                             step="0.01"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Tolerance</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tolerance</label>
                           <input
                             type="text"
                             value={dim.tolerance}
                             onChange={(e) => handleDimensionChange(index, 'tolerance', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                             placeholder="±0.5mm"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
                           <select
                             value={dim.status}
                             onChange={(e) => handleDimensionChange(index, 'status', e.target.value)}
-                            className="w-full border border-gray-300 rounded px-3 py-2"
+                            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                           >
                             <option value="Pending">Pending</option>
                             <option value="Pass">Pass</option>
@@ -344,7 +344,7 @@ export default function EditSupervisorCheckPage() {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">&nbsp;</label>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">&nbsp;</label>
                           {formData.dimensions.length > 1 && (
                             <button
                               type="button"
@@ -357,12 +357,12 @@ export default function EditSupervisorCheckPage() {
                         </div>
                       </div>
                       <div className="mt-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Remarks</label>
                         <input
                           type="text"
                           value={dim.remarks}
                           onChange={(e) => handleDimensionChange(index, 'remarks', e.target.value)}
-                          className="w-full border border-gray-300 rounded px-3 py-2"
+                          className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                         />
                       </div>
                     </div>
@@ -372,14 +372,14 @@ export default function EditSupervisorCheckPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Visual Inspection</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Visual Inspection</label>
                   <select
                     value={formData.visualInspection.status}
                     onChange={(e) => setFormData({
                       ...formData,
                       visualInspection: { ...formData.visualInspection, status: e.target.value }
                     })}
-                    className="w-full border border-gray-300 rounded px-3 py-2 mb-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2 mb-2"
                   >
                     <option value="Pending">Pending</option>
                     <option value="Pass">Pass</option>
@@ -391,20 +391,20 @@ export default function EditSupervisorCheckPage() {
                       ...formData,
                       visualInspection: { ...formData.visualInspection, remarks: e.target.value }
                     })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     rows={2}
                     placeholder="Visual inspection remarks"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Material Check</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Material Check</label>
                   <select
                     value={formData.materialCheck.status}
                     onChange={(e) => setFormData({
                       ...formData,
                       materialCheck: { ...formData.materialCheck, status: e.target.value }
                     })}
-                    className="w-full border border-gray-300 rounded px-3 py-2 mb-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2 mb-2"
                   >
                     <option value="Pending">Pending</option>
                     <option value="Pass">Pass</option>
@@ -416,7 +416,7 @@ export default function EditSupervisorCheckPage() {
                       ...formData,
                       materialCheck: { ...formData.materialCheck, remarks: e.target.value }
                     })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     rows={2}
                     placeholder="Material check remarks"
                   />
@@ -424,11 +424,11 @@ export default function EditSupervisorCheckPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Overall Status</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Overall Status</label>
                 <select
                   value={formData.overallStatus}
                   onChange={(e) => setFormData({ ...formData, overallStatus: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                 >
                   <option value="Pending">Pending</option>
                   <option value="In Progress">In Progress</option>
@@ -439,11 +439,11 @@ export default function EditSupervisorCheckPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Overall Remarks</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Overall Remarks</label>
                 <textarea
                   value={formData.remarks}
                   onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   rows={3}
                 />
               </div>
@@ -451,7 +451,7 @@ export default function EditSupervisorCheckPage() {
               <div className="flex justify-end space-x-4">
                 <Link
                   href={`/admin/supervisor-check/${params.id}`}
-                  className="px-6 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
+                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   Cancel
                 </Link>

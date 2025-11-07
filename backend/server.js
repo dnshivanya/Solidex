@@ -25,6 +25,7 @@ app.use('/api/order', require('./routes/order'));
 app.use('/api/customer-inspection', require('./routes/customerInspection'));
 app.use('/api/drawing', require('./routes/drawing'));
 app.use('/api/supervisor-check', require('./routes/supervisorCheck'));
+app.use('/api/gallery', require('./routes/gallery'));
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

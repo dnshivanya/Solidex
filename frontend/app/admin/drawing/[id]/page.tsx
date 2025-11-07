@@ -55,8 +55,8 @@ export default function DrawingDetailPage() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">Loading...</div>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="text-center text-gray-900 dark:text-white">Loading...</div>
         </div>
       </ProtectedRoute>
     );
@@ -68,13 +68,13 @@ export default function DrawingDetailPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Drawing: {drawing.drawingNumber}</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Drawing: {drawing.drawingNumber}</h2>
               <div className="flex space-x-2">
                 <Link
                   href={`/admin/drawing/${drawing._id}/edit`}
@@ -84,98 +84,98 @@ export default function DrawingDetailPage() {
                 </Link>
                 <Link
                   href="/admin/drawing"
-                  className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   Back
                 </Link>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6 space-y-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                  <p className="text-gray-900">{drawing.title}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
+                  <p className="text-gray-900 dark:text-white">{drawing.title}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Product</label>
-                  <p className="text-gray-900">{drawing.product?.name || 'N/A'}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Product</label>
+                  <p className="text-gray-900 dark:text-white">{drawing.product?.name || 'N/A'}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Order</label>
-                  <p className="text-gray-900">{drawing.order?.orderNumber || '-'}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Order</label>
+                  <p className="text-gray-900 dark:text-white">{drawing.order?.orderNumber || '-'}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
                   <span className={`px-3 py-1 text-sm rounded ${
-                    drawing.status === 'Approved' ? 'bg-green-100 text-green-800' :
-                    drawing.status === 'Rejected' ? 'bg-red-100 text-red-800' :
-                    drawing.status === 'Pending Approval' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-gray-100 text-gray-800'
+                    drawing.status === 'Approved' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                    drawing.status === 'Rejected' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                    drawing.status === 'Pending Approval' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' :
+                    'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                   }`}>
                     {drawing.status}
                   </span>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Version</label>
-                  <p className="text-gray-900">{drawing.version}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Version</label>
+                  <p className="text-gray-900 dark:text-white">{drawing.version}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">File Type</label>
-                  <p className="text-gray-900">{drawing.fileType}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">File Type</label>
+                  <p className="text-gray-900 dark:text-white">{drawing.fileType}</p>
                 </div>
               </div>
 
               {drawing.description && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                  <p className="text-gray-900">{drawing.description}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                  <p className="text-gray-900 dark:text-white">{drawing.description}</p>
                 </div>
               )}
 
               {drawing.specifications && (
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Specifications</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Specifications</h3>
                   <div className="grid grid-cols-3 gap-4">
                     {drawing.specifications.dimensions?.length && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Length</label>
-                        <p className="text-gray-900">{drawing.specifications.dimensions.length} mm</p>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Length</label>
+                        <p className="text-gray-900 dark:text-white">{drawing.specifications.dimensions.length} mm</p>
                       </div>
                     )}
                     {drawing.specifications.dimensions?.width && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Width</label>
-                        <p className="text-gray-900">{drawing.specifications.dimensions.width} mm</p>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Width</label>
+                        <p className="text-gray-900 dark:text-white">{drawing.specifications.dimensions.width} mm</p>
                       </div>
                     )}
                     {drawing.specifications.dimensions?.outerDiameter && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Outer Diameter (OD)</label>
-                        <p className="text-gray-900">{drawing.specifications.dimensions.outerDiameter} mm</p>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Outer Diameter (OD)</label>
+                        <p className="text-gray-900 dark:text-white">{drawing.specifications.dimensions.outerDiameter} mm</p>
                       </div>
                     )}
                     {drawing.specifications.material && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Material</label>
-                        <p className="text-gray-900">{drawing.specifications.material}</p>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Material</label>
+                        <p className="text-gray-900 dark:text-white">{drawing.specifications.material}</p>
                       </div>
                     )}
                     {drawing.specifications.weight && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Weight</label>
-                        <p className="text-gray-900">{drawing.specifications.weight} kg</p>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Weight</label>
+                        <p className="text-gray-900 dark:text-white">{drawing.specifications.weight} kg</p>
                       </div>
                     )}
                   </div>
                   {drawing.specifications.dimensions?.customFields && drawing.specifications.dimensions.customFields.length > 0 && (
                     <div className="mt-6">
-                      <h4 className="text-md font-semibold text-gray-900 mb-4">Custom Dimension Fields</h4>
+                      <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-4">Custom Dimension Fields</h4>
                       <div className="grid grid-cols-3 gap-4">
                         {drawing.specifications.dimensions.customFields.map((field: any, index: number) => (
                           <div key={index}>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{field.name}</label>
-                            <p className="text-gray-900">{field.value} {field.unit || 'mm'}</p>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{field.name}</label>
+                            <p className="text-gray-900 dark:text-white">{field.value} {field.unit || 'mm'}</p>
                           </div>
                         ))}
                       </div>
@@ -185,12 +185,12 @@ export default function DrawingDetailPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Drawing File</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Drawing File</label>
                 <a
                   href={fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-brand-blue hover:underline inline-flex items-center"
+                  className="text-brand-blue dark:text-blue-400 hover:underline inline-flex items-center"
                 >
                   <span className="mr-2">📄</span>
                   View/Download Drawing
@@ -199,8 +199,8 @@ export default function DrawingDetailPage() {
 
               {drawing.notes && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                  <p className="text-gray-900">{drawing.notes}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
+                  <p className="text-gray-900 dark:text-white">{drawing.notes}</p>
                 </div>
               )}
 

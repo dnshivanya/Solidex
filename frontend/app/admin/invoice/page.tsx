@@ -158,7 +158,9 @@ export default function InvoicePage() {
       // From section content
       let fromContentY = fromToStartY + contentStartOffset;
       fromContentY += 5; // SOLIDEX
-      fromContentY += 5; // Address line 1
+      // Address line 1 - check if it wraps
+      const fromAddressLine1 = doc.splitTextToSize('No 25, A/2, NTTF circle, opposite Peenya Gymkhana,', boxWidth - 8);
+      fromContentY += fromAddressLine1.length * 5; // Address line 1 (may wrap)
       fromContentY += 5; // Address line 2
       fromContentY += 5; // Address line 3
       fromContentY += 5; // Phone
@@ -167,7 +169,9 @@ export default function InvoicePage() {
       
       // Bill To section content
       let toContentY = fromToStartY + contentStartOffset;
-      toContentY += 5; // Party name
+      // Party name - check if it wraps
+      const partyNameLines = doc.splitTextToSize(fullInvoice.partyName || 'N/A', boxWidth - 8);
+      toContentY += partyNameLines.length * 5; // Party name (may wrap)
       if (fullInvoice.partyAddress) {
         const addressLines = doc.splitTextToSize(fullInvoice.partyAddress, boxWidth - 8);
         toContentY += addressLines.length * 5;
@@ -214,8 +218,11 @@ export default function InvoicePage() {
       let fromY = fromToStartY + contentStartOffset;
       doc.text('SOLIDEX', fromBoxX + 4, fromY);
       fromY += 5;
-      doc.text('No 25, A/2, NTTF circle, opposite Peenya Gymkhana,', fromBoxX + 4, fromY);
-      fromY += 5;
+      // Wrap long address line to fit within box
+      fromAddressLine1.forEach((line: string) => {
+        doc.text(line, fromBoxX + 4, fromY);
+        fromY += 5;
+      });
       doc.text('2nd Phase, Shivapura, Peenya,', fromBoxX + 4, fromY);
       fromY += 5;
       doc.text('Bengaluru, Karnataka 560058', fromBoxX + 4, fromY);
@@ -226,8 +233,11 @@ export default function InvoicePage() {
       
       // Bill To section content
       let toY = fromToStartY + contentStartOffset;
-      doc.text(fullInvoice.partyName || 'N/A', toBoxX + 4, toY);
-      toY += 5;
+      // Wrap party name if too long
+      partyNameLines.forEach((line: string) => {
+        doc.text(line, toBoxX + 4, toY);
+        toY += 5;
+      });
       if (fullInvoice.partyAddress) {
         const addressLines = doc.splitTextToSize(fullInvoice.partyAddress, boxWidth - 8);
         addressLines.forEach((line: string) => {
@@ -253,9 +263,9 @@ export default function InvoicePage() {
           item.product?.name || 'N/A',
           item.description || '-',
           item.quantity?.toString() || '0',
-          `₹${(item.rate || 0).toFixed(2)}`,
+          `Rs. ${(item.rate || 0).toFixed(2)}`,
           `${item.tax || 0}%`,
-          `₹${(item.amount || 0).toFixed(2)}`
+          `Rs. ${(item.amount || 0).toFixed(2)}`
         ]);
         
         autoTable(doc, {
@@ -268,8 +278,8 @@ export default function InvoicePage() {
             textColor: [0, 0, 0],
             fontStyle: 'bold',
             fontSize: 9,
-            lineColor: [0, 0, 0],
-            lineWidth: 0.5,
+            lineColor: [220, 220, 220],
+            lineWidth: 0.3,
             halign: 'left',
             valign: 'middle',
             cellPadding: 4
@@ -283,37 +293,38 @@ export default function InvoicePage() {
             valign: 'middle'
           },
           columnStyles: {
-            0: { cellWidth: 12, halign: 'center', lineColor: [220, 220, 220], cellPadding: 3 },
-            1: { cellWidth: 40, halign: 'left', lineColor: [220, 220, 220], cellPadding: 4 },
-            2: { cellWidth: 45, halign: 'left', lineColor: [220, 220, 220], cellPadding: 4 },
-            3: { cellWidth: 15, halign: 'center', lineColor: [220, 220, 220], cellPadding: 3 },
-            4: { cellWidth: 28, halign: 'right', lineColor: [220, 220, 220], cellPadding: 6 },
-            5: { cellWidth: 20, halign: 'center', lineColor: [220, 220, 220], cellPadding: 3 },
-            6: { cellWidth: 30, halign: 'right', lineColor: [220, 220, 220], cellPadding: 6 }
+            0: { cellWidth: 12, halign: 'center', lineColor: [220, 220, 220], lineWidth: 0.3, cellPadding: 3 },
+            1: { cellWidth: 35, halign: 'left', lineColor: [220, 220, 220], lineWidth: 0.3, cellPadding: 4 },
+            2: { cellWidth: 38, halign: 'left', lineColor: [220, 220, 220], lineWidth: 0.3, cellPadding: 4 },
+            3: { cellWidth: 15, halign: 'center', lineColor: [220, 220, 220], lineWidth: 0.3, cellPadding: 3 },
+            4: { cellWidth: 25, halign: 'right', lineColor: [220, 220, 220], lineWidth: 0.3, cellPadding: { top: 4, bottom: 4, left: 4, right: 6 } },
+            5: { cellWidth: 18, halign: 'center', lineColor: [220, 220, 220], lineWidth: 0.3, cellPadding: 3 },
+            6: { cellWidth: 32, halign: 'right', lineColor: [220, 220, 220], lineWidth: 0.3, cellPadding: { top: 4, bottom: 4, left: 4, right: 6 } }
           },
           didParseCell: function (data: any) {
-            // Ensure Rate and Amount columns are right-aligned in header too
-            if (data.section === 'head') {
-              if (data.column.index === 4 || data.column.index === 6) {
-                data.cell.styles.halign = 'right';
-              }
+            // Ensure Rate and Amount columns are right-aligned in both header and body
+            if (data.column.index === 4 || data.column.index === 6) {
+              data.cell.styles.halign = 'right';
             }
+            // Ensure consistent border styling for all cells
+            data.cell.styles.lineColor = [220, 220, 220];
+            data.cell.styles.lineWidth = 0.3;
           },
           styles: {
             lineColor: [220, 220, 220],
             lineWidth: 0.3
           },
-          margin: { left: margin, right: margin },
-          tableLineColor: [0, 0, 0],
-          tableLineWidth: 0.5
+          margin: { left: margin, right: margin }
         });
         
         yPos = (doc as any).lastAutoTable.finalY + 10;
       }
       
-      // Totals section (right aligned with border box)
+      // Totals section (right aligned with Amount column)
+      // Amount column right edge aligns with table right edge (pageWidth - margin)
+      const amountColumnRightEdge = pageWidth - margin;
       const totalsBoxWidth = 85;
-      const totalsBoxX = pageWidth - margin - totalsBoxWidth;
+      const totalsBoxX = amountColumnRightEdge - totalsBoxWidth; // Align right edge with Amount column
       const totalsStartY = yPos;
       
       // Calculate height needed
@@ -333,27 +344,27 @@ export default function InvoicePage() {
       doc.setFont('helvetica', 'normal');
       
       const labelX = totalsBoxX + 5;
-      const valueX = pageWidth - margin - 8; // More padding from edge
+      const valueX = amountColumnRightEdge - 8; // Align with Amount column right edge
       
       doc.text('Subtotal:', labelX, yPos);
-      doc.text(`₹${(fullInvoice.subtotal || 0).toFixed(2)}`, valueX, yPos, { align: 'right' });
+      doc.text(`Rs. ${(fullInvoice.subtotal || 0).toFixed(2)}`, valueX, yPos, { align: 'right' });
       yPos += 6;
       
       if (fullInvoice.discount > 0) {
         doc.text('Discount:', labelX, yPos);
-        doc.text(`-₹${fullInvoice.discount.toFixed(2)}`, valueX, yPos, { align: 'right' });
+        doc.text(`-Rs. ${fullInvoice.discount.toFixed(2)}`, valueX, yPos, { align: 'right' });
         yPos += 6;
       }
       
       if (fullInvoice.tax > 0) {
         doc.text('Tax:', labelX, yPos);
-        doc.text(`+₹${fullInvoice.tax.toFixed(2)}`, valueX, yPos, { align: 'right' });
+        doc.text(`+Rs. ${fullInvoice.tax.toFixed(2)}`, valueX, yPos, { align: 'right' });
         yPos += 6;
       }
       
       if (fullInvoice.shipping > 0) {
         doc.text('Shipping:', labelX, yPos);
-        doc.text(`+₹${fullInvoice.shipping.toFixed(2)}`, valueX, yPos, { align: 'right' });
+        doc.text(`+Rs. ${fullInvoice.shipping.toFixed(2)}`, valueX, yPos, { align: 'right' });
         yPos += 6;
       }
       
@@ -365,7 +376,7 @@ export default function InvoicePage() {
       doc.setFontSize(11);
       doc.setFont('helvetica', 'bold');
       doc.text('Total:', labelX, yPos);
-      doc.text(`₹${(fullInvoice.total || 0).toFixed(2)}`, valueX, yPos, { align: 'right' });
+      doc.text(`Rs. ${(fullInvoice.total || 0).toFixed(2)}`, valueX, yPos, { align: 'right' });
       yPos += 15;
       
       // Notes and Payment Terms section

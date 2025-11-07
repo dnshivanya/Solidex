@@ -25,7 +25,33 @@ export default function CreateDrawingPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    order: string;
+    product: string;
+    title: string;
+    description: string;
+    version: string;
+    revision: string;
+    drawingFile: string;
+    fileType: string;
+    uploadedBy: string;
+    status: string;
+    specifications: {
+      dimensions: {
+        length: string;
+        width: string;
+        height: string;
+        outerDiameter: string;
+        innerDiameter: string;
+        thickness: string;
+        customFields: Array<{ name: string; value: string; unit: string }>;
+      };
+      material: string;
+      weight: string;
+      other: string;
+    };
+    notes: string;
+  }>({
     order: '',
     product: '',
     title: '',
@@ -181,21 +207,21 @@ export default function CreateDrawingPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Upload Drawing</h2>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Upload Drawing</h2>
 
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Product *</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Product *</label>
                   <select
                     value={formData.product}
                     onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     required
                   >
                     <option value="">Select Product</option>
@@ -207,11 +233,11 @@ export default function CreateDrawingPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Order (Optional)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Order (Optional)</label>
                   <select
                     value={formData.order}
                     onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   >
                     <option value="">Select Order</option>
                     {orders.map((order) => (
@@ -224,51 +250,51 @@ export default function CreateDrawingPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Title *</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   rows={3}
                 />
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Version</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Version</label>
                   <input
                     type="text"
                     value={formData.version}
                     onChange={(e) => setFormData({ ...formData, version: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Revision</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Revision</label>
                   <input
                     type="text"
                     value={formData.revision}
                     onChange={(e) => setFormData({ ...formData, revision: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   >
                     <option value="Draft">Draft</option>
                     <option value="Pending Approval">Pending Approval</option>
@@ -278,22 +304,22 @@ export default function CreateDrawingPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Drawing File *</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Drawing File *</label>
                 <input
                   type="file"
                   accept=".pdf,.dwg,.dxf,.png,.jpg,.jpeg"
                   onChange={handleFileChange}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-brand-blue file:text-white hover:file:bg-blue-600 file:cursor-pointer"
+                  className="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-brand-blue file:text-white hover:file:bg-blue-600 file:cursor-pointer"
                   required
                 />
-                <p className="text-xs text-gray-500 mt-2">Accepted formats: PDF, DWG, DXF, PNG, JPG. Max size: 20MB</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Accepted formats: PDF, DWG, DXF, PNG, JPG. Max size: 20MB</p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Dimensions</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Dimensions</h3>
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Length (mm)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Length (mm)</label>
                     <input
                       type="number"
                       value={formData.specifications.dimensions.length}
@@ -304,12 +330,12 @@ export default function CreateDrawingPage() {
                           dimensions: { ...formData.specifications.dimensions, length: e.target.value }
                         }
                       })}
-                      className="w-full border border-gray-300 rounded px-3 py-2"
+                      className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                       step="0.01"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Width (mm)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Width (mm)</label>
                     <input
                       type="number"
                       value={formData.specifications.dimensions.width}
@@ -320,12 +346,12 @@ export default function CreateDrawingPage() {
                           dimensions: { ...formData.specifications.dimensions, width: e.target.value }
                         }
                       })}
-                      className="w-full border border-gray-300 rounded px-3 py-2"
+                      className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                       step="0.01"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Height (mm)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Height (mm)</label>
                     <input
                       type="number"
                       value={formData.specifications.dimensions.height}
@@ -336,12 +362,12 @@ export default function CreateDrawingPage() {
                           dimensions: { ...formData.specifications.dimensions, height: e.target.value }
                         }
                       })}
-                      className="w-full border border-gray-300 rounded px-3 py-2"
+                      className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                       step="0.01"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Outer Diameter (OD) (mm)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Outer Diameter (OD) (mm)</label>
                     <input
                       type="number"
                       value={formData.specifications.dimensions.outerDiameter}
@@ -352,12 +378,12 @@ export default function CreateDrawingPage() {
                           dimensions: { ...formData.specifications.dimensions, outerDiameter: e.target.value }
                         }
                       })}
-                      className="w-full border border-gray-300 rounded px-3 py-2"
+                      className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                       step="0.01"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Inner Diameter (ID) (mm)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Inner Diameter (ID) (mm)</label>
                     <input
                       type="number"
                       value={formData.specifications.dimensions.innerDiameter}
@@ -368,12 +394,12 @@ export default function CreateDrawingPage() {
                           dimensions: { ...formData.specifications.dimensions, innerDiameter: e.target.value }
                         }
                       })}
-                      className="w-full border border-gray-300 rounded px-3 py-2"
+                      className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                       step="0.01"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Thickness (mm)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Thickness (mm)</label>
                     <input
                       type="number"
                       value={formData.specifications.dimensions.thickness}
@@ -384,7 +410,7 @@ export default function CreateDrawingPage() {
                           dimensions: { ...formData.specifications.dimensions, thickness: e.target.value }
                         }
                       })}
-                      className="w-full border border-gray-300 rounded px-3 py-2"
+                      className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                       step="0.01"
                     />
                   </div>
@@ -392,7 +418,7 @@ export default function CreateDrawingPage() {
 
                 <div className="mt-6">
                   <div className="flex justify-between items-center mb-4">
-                    <h4 className="text-md font-semibold text-gray-900">Custom Dimension Fields</h4>
+                    <h4 className="text-md font-semibold text-gray-900 dark:text-white">Custom Dimension Fields</h4>
                     <button
                       type="button"
                       onClick={() => {
@@ -410,7 +436,7 @@ export default function CreateDrawingPage() {
                           }
                         });
                       }}
-                      className="text-brand-blue hover:underline text-sm"
+                      className="text-brand-blue dark:text-blue-400 hover:underline text-sm"
                     >
                       + Add Custom Field
                     </button>
@@ -418,10 +444,10 @@ export default function CreateDrawingPage() {
                   {formData.specifications.dimensions.customFields.length > 0 && (
                     <div className="space-y-3">
                       {formData.specifications.dimensions.customFields.map((field, index) => (
-                        <div key={index} className="border border-gray-200 rounded p-4">
+                        <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-4">
                           <div className="grid grid-cols-12 gap-4">
                             <div className="col-span-4">
-                              <label className="block text-sm font-medium text-gray-700 mb-2">Field Name *</label>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Field Name *</label>
                               <input
                                 type="text"
                                 value={field.name}
@@ -439,12 +465,12 @@ export default function CreateDrawingPage() {
                                     }
                                   });
                                 }}
-                                className="w-full border border-gray-300 rounded px-3 py-2"
+                                className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                                 placeholder="e.g., Depth, Radius"
                               />
                             </div>
                             <div className="col-span-6">
-                              <label className="block text-sm font-medium text-gray-700 mb-2">Value *</label>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Value *</label>
                               <input
                                 type="text"
                                 value={field.value}
@@ -462,12 +488,12 @@ export default function CreateDrawingPage() {
                                     }
                                   });
                                 }}
-                                className="w-full border border-gray-300 rounded px-3 py-2"
+                                className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                                 placeholder="Enter value"
                               />
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-sm font-medium text-gray-700 mb-2">Unit</label>
+                              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Unit</label>
                               <input
                                 type="text"
                                 value={field.unit}
@@ -485,7 +511,7 @@ export default function CreateDrawingPage() {
                                     }
                                   });
                                 }}
-                                className="w-full border border-gray-300 rounded px-3 py-2"
+                                className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                                 placeholder="mm"
                               />
                             </div>
@@ -520,7 +546,7 @@ export default function CreateDrawingPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Material</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Material</label>
                   <input
                     type="text"
                     value={formData.specifications.material}
@@ -528,11 +554,11 @@ export default function CreateDrawingPage() {
                       ...formData,
                       specifications: { ...formData.specifications, material: e.target.value }
                     })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Weight (kg)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Weight (kg)</label>
                   <input
                     type="number"
                     value={formData.specifications.weight}
@@ -540,31 +566,31 @@ export default function CreateDrawingPage() {
                       ...formData,
                       specifications: { ...formData.specifications, weight: e.target.value }
                     })}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                     step="0.01"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Other Specifications</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Other Specifications</label>
                 <textarea
                   value={formData.specifications.other}
                   onChange={(e) => setFormData({
                     ...formData,
                     specifications: { ...formData.specifications, other: e.target.value }
                   })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   rows={3}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Notes</label>
                 <textarea
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-2"
                   rows={3}
                 />
               </div>
@@ -572,7 +598,7 @@ export default function CreateDrawingPage() {
               <div className="flex justify-end space-x-4">
                 <Link
                   href="/admin/drawing"
-                  className="px-6 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
+                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   Cancel
                 </Link>

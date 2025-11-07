@@ -67,8 +67,8 @@ export default function OrderDetailPage() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">Loading...</div>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="text-center text-gray-900 dark:text-white">Loading...</div>
         </div>
       </ProtectedRoute>
     );
@@ -78,13 +78,13 @@ export default function OrderDetailPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Order: {order.orderNumber}</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Order: {order.orderNumber}</h2>
               <div className="flex space-x-2">
                 <Link
                   href={`/admin/order/${order._id}/edit`}
@@ -94,86 +94,86 @@ export default function OrderDetailPage() {
                 </Link>
                 <Link
                   href="/admin/order"
-                  className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   Back
                 </Link>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6 space-y-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
-                  <p className="text-gray-900">{order.customerName}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Customer Name</label>
+                  <p className="text-gray-900 dark:text-white">{order.customerName}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
                   <span className={`px-3 py-1 text-sm rounded ${
-                    order.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                    order.status === 'Cancelled' ? 'bg-red-100 text-red-800' :
-                    order.status === 'In Production' ? 'bg-blue-100 text-blue-800' :
-                    'bg-yellow-100 text-yellow-800'
+                    order.status === 'Completed' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                    order.status === 'Cancelled' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                    order.status === 'In Production' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300' :
+                    'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
                   }`}>
                     {order.status}
                   </span>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Order Date</label>
-                  <p className="text-gray-900">{new Date(order.orderDate).toLocaleDateString()}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Order Date</label>
+                  <p className="text-gray-900 dark:text-white">{new Date(order.orderDate).toLocaleDateString()}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Priority</label>
                   <span className={`px-2 py-1 text-xs rounded ${
-                    order.priority === 'Urgent' ? 'bg-red-100 text-red-800' :
-                    order.priority === 'High' ? 'bg-orange-100 text-orange-800' :
-                    'bg-gray-100 text-gray-800'
+                    order.priority === 'Urgent' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                    order.priority === 'High' ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300' :
+                    'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                   }`}>
                     {order.priority}
                   </span>
                 </div>
                 {order.deliveryDate && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Delivery Date</label>
-                    <p className="text-gray-900">{new Date(order.deliveryDate).toLocaleDateString()}</p>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Delivery Date</label>
+                    <p className="text-gray-900 dark:text-white">{new Date(order.deliveryDate).toLocaleDateString()}</p>
                   </div>
                 )}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Total Amount</label>
-                  <p className="text-gray-900 font-semibold">₹{order.totalAmount.toLocaleString()}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Total Amount</label>
+                  <p className="text-gray-900 dark:text-white font-semibold">₹{order.totalAmount.toLocaleString()}</p>
                 </div>
               </div>
 
               {order.customerAddress && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Customer Address</label>
-                  <p className="text-gray-900">{order.customerAddress}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Customer Address</label>
+                  <p className="text-gray-900 dark:text-white">{order.customerAddress}</p>
                 </div>
               )}
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Order Items</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Order Items</h3>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
+                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead className="bg-gray-50 dark:bg-gray-700">
                       <tr>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rate</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Specifications</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Product</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Quantity</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Rate</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Amount</th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Specifications</th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                       {order.items.map((item: any, index: number) => (
                         <tr key={index}>
-                          <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                          <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">
                             {item.product?.name || 'N/A'}
                           </td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{item.quantity} {item.unit}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">₹{item.rate.toFixed(2)}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">₹{item.amount.toFixed(2)}</td>
-                          <td className="px-4 py-3 text-sm text-gray-500">{item.specifications || '-'}</td>
+                          <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">{item.quantity} {item.unit}</td>
+                          <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">₹{item.rate.toFixed(2)}</td>
+                          <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">₹{item.amount.toFixed(2)}</td>
+                          <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">{item.specifications || '-'}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -183,12 +183,12 @@ export default function OrderDetailPage() {
 
               {order.remarks && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
-                  <p className="text-gray-900">{order.remarks}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Remarks</label>
+                  <p className="text-gray-900 dark:text-white">{order.remarks}</p>
                 </div>
               )}
 
-              <div className="flex justify-between items-center pt-6 border-t">
+              <div className="flex justify-between items-center pt-6 border-t dark:border-gray-700">
                 <div className="flex space-x-2">
                   {order.status !== 'Completed' && order.status !== 'Cancelled' && (
                     <>

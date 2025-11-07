@@ -55,8 +55,8 @@ export default function CustomerInspectionDetailPage() {
   if (loading) {
     return (
       <ProtectedRoute>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">Loading...</div>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="text-center text-gray-900 dark:text-white">Loading...</div>
         </div>
       </ProtectedRoute>
     );
@@ -66,13 +66,13 @@ export default function CustomerInspectionDetailPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar isPublic={false} />
 
         <main className="max-w-6xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Inspection: {inspection.inspectionNumber}</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Inspection: {inspection.inspectionNumber}</h2>
               <div className="flex space-x-2">
                 <Link
                   href={`/admin/customer-inspection/${inspection._id}/edit`}
@@ -82,38 +82,38 @@ export default function CustomerInspectionDetailPage() {
                 </Link>
                 <Link
                   href="/admin/customer-inspection"
-                  className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   Back
                 </Link>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6 space-y-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
-                  <p className="text-gray-900">{inspection.customerName}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Customer Name</label>
+                  <p className="text-gray-900 dark:text-white">{inspection.customerName}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Order</label>
-                  <p className="text-gray-900">{inspection.order?.orderNumber || 'N/A'}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Order</label>
+                  <p className="text-gray-900 dark:text-white">{inspection.order?.orderNumber || 'N/A'}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Scheduled Date</label>
-                  <p className="text-gray-900">{new Date(inspection.scheduledDate).toLocaleDateString()}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Scheduled Date</label>
+                  <p className="text-gray-900 dark:text-white">{new Date(inspection.scheduledDate).toLocaleDateString()}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Inspection Type</label>
-                  <p className="text-gray-900">{inspection.inspectionType}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Inspection Type</label>
+                  <p className="text-gray-900 dark:text-white">{inspection.inspectionType}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
                   <span className={`px-3 py-1 text-sm rounded ${
-                    inspection.overallStatus === 'Passed' ? 'bg-green-100 text-green-800' :
-                    inspection.overallStatus === 'Failed' ? 'bg-red-100 text-red-800' :
-                    inspection.overallStatus === 'Conditional Approval' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-gray-100 text-gray-800'
+                    inspection.overallStatus === 'Passed' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
+                    inspection.overallStatus === 'Failed' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' :
+                    inspection.overallStatus === 'Conditional Approval' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' :
+                    'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
                   }`}>
                     {inspection.overallStatus}
                   </span>
@@ -122,13 +122,13 @@ export default function CustomerInspectionDetailPage() {
 
               {inspection.customerTeam && inspection.customerTeam.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Customer Team</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Customer Team</h3>
                   <div className="space-y-2">
                     {inspection.customerTeam.map((member: any, index: number) => (
-                      <div key={index} className="border border-gray-200 rounded p-3">
-                        <p className="font-semibold">{member.name}</p>
-                        <p className="text-sm text-gray-600">{member.designation}</p>
-                        {member.contact && <p className="text-sm text-gray-600">Contact: {member.contact}</p>}
+                      <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-3">
+                        <p className="font-semibold text-gray-900 dark:text-white">{member.name}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">{member.designation}</p>
+                        {member.contact && <p className="text-sm text-gray-600 dark:text-gray-300">Contact: {member.contact}</p>}
                       </div>
                     ))}
                   </div>
@@ -136,35 +136,35 @@ export default function CustomerInspectionDetailPage() {
               )}
 
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Inspection Items</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Inspection Items</h3>
                 <div className="space-y-4">
                   {inspection.items.map((item: any, index: number) => (
-                    <div key={index} className="border border-gray-200 rounded p-4">
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-4">
                       <div className="grid grid-cols-4 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Product</label>
-                          <p className="text-gray-900">{item.product?.name || 'N/A'}</p>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Product</label>
+                          <p className="text-gray-900 dark:text-white">{item.product?.name || 'N/A'}</p>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
-                          <p className="text-gray-900">{item.quantity}</p>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Quantity</label>
+                          <p className="text-gray-900 dark:text-white">{item.quantity}</p>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Inspected</label>
-                          <p className="text-gray-900">{item.inspectedQuantity}</p>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Inspected</label>
+                          <p className="text-gray-900 dark:text-white">{item.inspectedQuantity}</p>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Passed</label>
-                          <p className="text-green-600 font-semibold">{item.passedQuantity}</p>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Passed</label>
+                          <p className="text-green-600 dark:text-green-400 font-semibold">{item.passedQuantity}</p>
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Rejected</label>
-                          <p className="text-red-600 font-semibold">{item.rejectedQuantity}</p>
+                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Rejected</label>
+                          <p className="text-red-600 dark:text-red-400 font-semibold">{item.rejectedQuantity}</p>
                         </div>
                         {item.remarks && (
                           <div className="col-span-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
-                            <p className="text-gray-900">{item.remarks}</p>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Remarks</label>
+                            <p className="text-gray-900 dark:text-white">{item.remarks}</p>
                           </div>
                         )}
                       </div>
@@ -175,15 +175,15 @@ export default function CustomerInspectionDetailPage() {
 
               {inspection.customerRemarks && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Customer Remarks</label>
-                  <p className="text-gray-900">{inspection.customerRemarks}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Customer Remarks</label>
+                  <p className="text-gray-900 dark:text-white">{inspection.customerRemarks}</p>
                 </div>
               )}
 
               {inspection.internalRemarks && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Internal Remarks</label>
-                  <p className="text-gray-900">{inspection.internalRemarks}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Internal Remarks</label>
+                  <p className="text-gray-900 dark:text-white">{inspection.internalRemarks}</p>
                 </div>
               )}
 
