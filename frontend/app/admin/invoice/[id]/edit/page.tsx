@@ -122,10 +122,10 @@ export default function EditInvoicePage() {
     newItems[index] = { ...newItems[index], [field]: value };
     
     if (field === 'rate' || field === 'quantity' || field === 'discount' || field === 'tax') {
-      const rate = parseFloat(newItems[index].rate) || 0;
-      const qty = parseFloat(newItems[index].quantity) || 0;
-      const discount = parseFloat(newItems[index].discount) || 0;
-      const tax = parseFloat(newItems[index].tax) || 0;
+      const rate = parseFloat(String(newItems[index].rate)) || 0;
+      const qty = parseFloat(String(newItems[index].quantity)) || 0;
+      const discount = parseFloat(String(newItems[index].discount)) || 0;
+      const tax = parseFloat(String(newItems[index].tax)) || 0;
       const itemAmount = (rate * qty) - discount;
       newItems[index].amount = itemAmount + (itemAmount * tax / 100);
     }
