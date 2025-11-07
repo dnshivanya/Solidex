@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
@@ -15,7 +15,7 @@ interface Product {
   unit: string;
 }
 
-export default function CreateDCPage() {
+function CreateDCPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const type = searchParams.get('type') || 'Inward';
@@ -334,6 +334,20 @@ export default function CreateDCPage() {
         </main>
       </div>
     </ProtectedRoute>
+  );
+}
+
+export default function CreateDCPage() {
+  return (
+    <Suspense fallback={
+      <ProtectedRoute>
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">Loading...</div>
+        </div>
+      </ProtectedRoute>
+    }>
+      <CreateDCPageContent />
+    </Suspense>
   );
 }
 

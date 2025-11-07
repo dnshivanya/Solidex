@@ -313,7 +313,7 @@ export default function ProductsPage() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           {product.image || (product.images && product.images.length > 0) ? (
                             <img 
-                              src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${product.image || product.images[0]}`}
+                              src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${product.image || product.images?.[0] || ''}`}
                               alt={product.name}
                               className="w-16 h-16 object-cover rounded border border-gray-200"
                               onError={(e) => {

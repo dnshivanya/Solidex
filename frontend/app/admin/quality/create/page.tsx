@@ -85,9 +85,9 @@ export default function CreateQualityCheckPage() {
     newItems[index] = { ...newItems[index], [field]: value };
     
     if (field === 'checkedQuantity' || field === 'passedQuantity' || field === 'failedQuantity') {
-      const checked = parseInt(newItems[index].checkedQuantity) || 0;
-      const passed = parseInt(newItems[index].passedQuantity) || 0;
-      const failed = parseInt(newItems[index].failedQuantity) || 0;
+      const checked = parseInt(String(newItems[index].checkedQuantity)) || 0;
+      const passed = parseInt(String(newItems[index].passedQuantity)) || 0;
+      const failed = parseInt(String(newItems[index].failedQuantity)) || 0;
       
       if (checked > 0) {
         if (passed === checked && failed === 0) newItems[index].status = 'Passed';
